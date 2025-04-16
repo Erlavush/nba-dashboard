@@ -14,6 +14,9 @@ library(scales)    # For scales::percent()
 library(tidyr)     # For replace_na() - Added
 library(plotly)    # Kept in case needed later
 library(shinycssloaders) # <<< ADD THIS LINE
+library(httr)      
+library(rvest)     
+library(stringr)   
 
 print("--- Sourcing Modules ---")
 
