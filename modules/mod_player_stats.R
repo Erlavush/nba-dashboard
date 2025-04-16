@@ -1,6 +1,9 @@
 # modules/mod_player_stats.R
 # CLEAN VERSION: Handles player comparison with headshots and 3-col stat grid only.
 
+# Needed libraries (Ensure loaded in global.R):
+# shiny, dplyr, purrr, hoopR, scales, tidyr, shinycssloaders
+
 #' Player Stats Module UI Function
 #' @param id Internal parameters for {shiny}.
 #' @noRd
@@ -15,11 +18,12 @@ mod_player_stats_ui <- function(id){
     ),
     hr(),
     # Main output area for player cards OR messages
-    uiOutput(ns("comparison_display_area"))
+    # Wrap the main display area with spinner
+    withSpinner(uiOutput(ns("comparison_display_area")), type=7, color="#cccccc")
   )
 }
 
-#' Player Stats Module Server Function
+# --- Player Stats Module Server Function (NO CHANGES NEEDED HERE FOR SPINNERS) ---
 #' @param id Internal parameters for {shiny}.
 #' @noRd
 mod_player_stats_server <- function(id){
@@ -82,7 +86,11 @@ mod_player_stats_server <- function(id){
     # --- Main Display Area UI Renderer (No Plot Anymore) ---
     output$comparison_display_area <- renderUI({
       if (!is.null(rv$error_message)) { tags$div(class = "validation-error-message", rv$error_message) }
-      else if (is.null(input$player_select_1) || input$player_select_1 == "" || is.null(input$player_select_2) || input$player_select_2 == "") { if (is.null(rv$stats_data)) { tags$p("Loading player data...") } else { tags$p("Please select two players using the dropdowns above.", style="text-align: center;") } } # Centered prompt
+      else if (is.null(input$player_select_1) || input$player_select_1 == "" || is.null(input$player_select_2) || input$player_select_2 == "") {
+        # Message is handled by the spinner now, so return NULL or an empty tagList
+        return(tagList())
+        # if (is.null(rv$stats_data)) { tags$p("Loading player data...") } else { tags$p("Please select two players using the dropdowns above.", style="text-align: center;") } 
+      } 
       else if (input$player_select_1 == input$player_select_2) { tags$div(class = "validation-error-message", "Please select two different players.") }
       else {
         # Only show the player cards
@@ -99,4 +107,3 @@ mod_player_stats_server <- function(id){
     
   }) # End moduleServer
 } # End Server Function
-

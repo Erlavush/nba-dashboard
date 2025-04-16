@@ -9,12 +9,11 @@ library(bslib)
 library(dplyr)
 library(purrr)     # For %||% operator and list manipulation
 library(hoopR)     # For fetching NBA data
-library(echarts4r) # For interactive radar chart
+library(echarts4r) # For interactive radar chart (kept in case needed later)
 library(scales)    # For scales::percent()
 library(tidyr)     # For replace_na() - Added
-library(plotly)
-# library(DT) # No longer needed unless used elsewh ere
-# library(ggplot2) # No longer needed unless used elsewhere
+library(plotly)    # Kept in case needed later
+library(shinycssloaders) # <<< ADD THIS LINE
 
 print("--- Sourcing Modules ---")
 
@@ -67,4 +66,3 @@ if (!exists("mod_player_stats_ui", mode = "function")) {
 # year_to_season <- hoopR::year_to_season
 
 print("--- Finished global.R ---")
-

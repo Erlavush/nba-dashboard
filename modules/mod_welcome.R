@@ -1,9 +1,10 @@
 # modules/mod_welcome.R
 # VERSION: Scoreboard, Standings & Multiple Leaders (PTS, AST, REB, BLK, STL)
 # Uses SEPARATED LOGIC and HELPER FUNCTIONS for fetching and rendering leaders.
+# UPDATED: Decoupled Standings/Leaders from Scoreboard date changes.
 
 # Needed libraries (Ensure loaded in global.R):
-# shiny, dplyr, purrr, hoopR, glue, tidyr, scales, rlang
+# shiny, dplyr, purrr, hoopR, glue, tidyr, scales, rlang, shinycssloaders
 
 #' Welcome Module UI Function
 #' @param id Internal parameters for {shiny}.
@@ -17,40 +18,43 @@ mod_welcome_ui <- function(id){
       column(width = 4, # Adjust width as needed
              div(class = "date-nav-container",
                  actionButton(ns("prev_day"), label = NULL, icon = icon("angle-left"), class = "date-nav-btn"),
-                 tags$div(class="date-display-wrapper", uiOutput(ns("current_date_display"), inline = TRUE)),
+                 # Wrap date display with a smaller spinner
+                 tags$div(class="date-display-wrapper", withSpinner(uiOutput(ns("current_date_display"), inline = TRUE), type=7, color="#cccccc", size=0.6)),
                  actionButton(ns("next_day"), label = NULL, icon = icon("angle-right"), class = "date-nav-btn"),
                  tags$div(style = "display: none;", dateInput(ns("select_date"), label = NULL, value = Sys.Date())) # Hidden date input
              ),
              h4("Games", style = "color: #ffffff; border-bottom: 1px solid #444; padding-bottom: 5px; margin-top: 15px; margin-bottom: 15px;"),
-             uiOutput(ns("scoreboard_output")) # Output for scoreboard cards
+             # Wrap scoreboard output with spinner
+             withSpinner(uiOutput(ns("scoreboard_output")), type=7, color="#cccccc")
       ), # End Left Column
       
       # --- Middle Column: Standings ---
       column(width = 4, # Adjust width as needed
              h4("Standings", style = "color: #ffffff; border-bottom: 1px solid #444; padding-bottom: 5px; margin-bottom: 15px;"),
-             uiOutput(ns("standings_output")) # Output for standings tables
+             # Wrap standings output with spinner
+             withSpinner(uiOutput(ns("standings_output")), type=7, color="#cccccc")
       ), # End Middle Column
       
       # --- Right Column: League Leaders ---
       column(width = 4, # Adjust width as needed
              h4("League Leaders", style = "color: #ffffff; border-bottom: 1px solid #444; padding-bottom: 5px; margin-bottom: 15px;"), # General Title
-             # Outputs for each leader category, displayed vertically
-             uiOutput(ns("leaders_pts_output")),
+             # Wrap each leader output with spinner (slightly smaller size)
+             withSpinner(uiOutput(ns("leaders_pts_output")), type=7, color="#cccccc", size=0.8),
              tags$br(),
-             uiOutput(ns("leaders_ast_output")),
+             withSpinner(uiOutput(ns("leaders_ast_output")), type=7, color="#cccccc", size=0.8),
              tags$br(),
-             uiOutput(ns("leaders_reb_output")),
+             withSpinner(uiOutput(ns("leaders_reb_output")), type=7, color="#cccccc", size=0.8),
              tags$br(),
-             uiOutput(ns("leaders_blk_output")),
+             withSpinner(uiOutput(ns("leaders_blk_output")), type=7, color="#cccccc", size=0.8),
              tags$br(),
-             uiOutput(ns("leaders_stl_output"))
+             withSpinner(uiOutput(ns("leaders_stl_output")), type=7, color="#cccccc", size=0.8)
       ) # End Right Column
       
     ) # End Main Content fluidRow
   ) # End tagList
 }
 
-#' Welcome Module Server Function
+# --- Welcome Module Server Function (UPDATED LOGIC) ---
 #' @param id Internal parameters for {shiny}.
 #' @noRd
 mod_welcome_server <- function(id){
@@ -67,7 +71,7 @@ mod_welcome_server <- function(id){
     rv_ld_blk <- reactiveValues( data = NULL, error = NULL, last_fetch_time = NULL) # Blocks
     rv_ld_stl <- reactiveValues( data = NULL, error = NULL, last_fetch_time = NULL) # Steals
     
-    # --- Shared Reactive Value for Selected Date ---
+    # --- Shared Reactive Value for Selected Date (Scoreboard ONLY) ---
     selected_date <- reactiveVal(Sys.Date() - 1) # Default to yesterday
     
     # --- Date Control Observers (Shared) ---
@@ -77,6 +81,7 @@ mod_welcome_server <- function(id){
     output$current_date_display <- renderUI({ req(selected_date()); tags$h5(format(selected_date(), "%a, %b %d, %Y"), style="margin:0;") })
     
     # --- Headshot Helper & Cache (Shared but self-contained) ---
+    # (No changes needed in this helper)
     headshot_cache <- reactiveValues()
     get_player_headshot_url <- function(player_id) {
       req(player_id)
@@ -84,7 +89,7 @@ mod_welcome_server <- function(id){
       if (!is.null(headshot_cache[[cache_key]])) {
         return(headshot_cache[[cache_key]])
       }
-      print(paste("Fetching headshot for player ID:", player_id)) # Keep this for debugging fetch calls
+      print(paste("Fetching headshot for player ID:", player_id)) 
       url <- tryCatch({
         hoopR::nba_playerheadshot(player_id = as.numeric(player_id))
       }, error = function(e) {
@@ -97,16 +102,29 @@ mod_welcome_server <- function(id){
     }
     
     # --- SEPARATE Fetch Function for Scoreboard ---
+    # (UPDATED: Handle "No Games Found" as empty data, not error)
     fetch_scoreboard_data <- function(fetch_date) {
-      # (Code from previous correct version)
       current_date_string <- format(fetch_date, "%Y-%m-%d")
       current_date_espn <- format(fetch_date, "%Y%m%d")
       print(paste("Fetching Scoreboard data for date:", current_date_string))
-      rv_sb$last_fetch_time <- Sys.time(); rv_sb$data <- NULL; rv_sb$error <- NULL
-      data_sb <- NULL; sb_v3_err_msg <- NULL; sb_espn_err_msg <- NULL
-      v3_result_sb <- tryCatch({ hoopR::nba_scoreboardv3(game_date = current_date_string) }, error = function(e) { list(error = TRUE, message = paste("v3 internal error:", e$message)) })
-      is_v3_error_structure <- is.list(v3_result_sb) && !is.null(v3_result_sb$error) && isTRUE(v3_result_sb$error)
-      if (!is_v3_error_structure) {
+      rv_sb$last_fetch_time <- Sys.time(); rv_sb$data <- NULL; rv_sb$error <- NULL # Reset state
+      data_sb <- NULL
+      sb_v3_err_msg <- NULL
+      sb_espn_err_msg <- NULL
+      
+      # --- Attempt 1: Scoreboard V3 ---
+      v3_result_sb <- tryCatch({ 
+        hoopR::nba_scoreboardv3(game_date = current_date_string) 
+      }, error = function(e) { 
+        list(error = TRUE, message = paste("v3 internal error:", e$message)) 
+      })
+      
+      # Check if V3 result is an actual error or just empty
+      is_v3_actual_error <- is.list(v3_result_sb) && isTRUE(v3_result_sb$error)
+      is_v3_no_data_msg <- is_v3_actual_error && grepl("no scoreboard v3 data|object 'games' not found", v3_result_sb$message, ignore.case = TRUE)
+      
+      if (!is_v3_actual_error) {
+        # V3 Success - check if it actually contains data
         if ("scoreboard" %in% names(v3_result_sb) && !is.null(v3_result_sb$scoreboard) && is.data.frame(v3_result_sb$scoreboard) && nrow(v3_result_sb$scoreboard) > 0) {
           sb_data_v3 <- v3_result_sb$scoreboard
           has_records_v3 <- all(c("home_wins", "home_losses", "away_wins", "away_losses") %in% names(sb_data_v3))
@@ -115,34 +133,91 @@ mod_welcome_server <- function(id){
               dplyr::select( gameId = game_id, gameStatus = game_status_text, gameTime = game_et, homeTeamName = home_team_name, homeTeamAbbr = home_team_tricode, homeScore = home_score, awayTeamName = away_team_name, awayTeamAbbr = away_team_tricode, awayScore = away_score, any_of(c(home_wins = "home_wins", home_losses = "home_losses", away_wins = "away_wins", away_losses = "away_losses")) ) %>%
               dplyr::mutate( homeLogo = glue::glue("https://cdn.nba.com/logos/nba/{homeTeamAbbr}/global/L/logo.svg"), awayLogo = glue::glue("https://cdn.nba.com/logos/nba/{awayTeamAbbr}/global/L/logo.svg"), homeRecord = if(has_records_v3 && exists("home_wins", where = .)) paste0("(", home_wins, "-", home_losses, ")") else NA_character_, awayRecord = if(has_records_v3 && exists("away_wins", where = .)) paste0("(", away_wins, "-", away_losses, ")") else NA_character_, across(c(homeScore, awayScore), ~ as.integer(tidyr::replace_na(.x, NA))) ) %>%
               dplyr::select(gameId, gameStatus, gameTime, homeTeamName, homeTeamAbbr, homeScore, homeLogo, homeRecord, awayTeamName, awayTeamAbbr, awayScore, awayLogo, awayRecord)
-          }, error = function(e_proc) { print(paste("Error processing v3 scoreboard:", e_proc$message)); sb_v3_err_msg <<- paste("Proc fail:", e_proc$message); NULL })
-        } else { sb_v3_err_msg <- "V3 success, but no game data." }
-      } else { sb_v3_err_msg <- v3_result_sb$message %||% "V3 fetch failed (error structure)." }
+          }, error = function(e_proc) { 
+            print(paste("Error processing v3 scoreboard:", e_proc$message))
+            sb_v3_err_msg <<- paste("V3 Proc fail:", e_proc$message) # Assign error message
+            NULL # Return NULL on processing error
+          })
+        } else {
+          # V3 Success structure, but no actual game data rows or scoreboard element
+          sb_v3_err_msg <- "V3 returned no game rows." 
+          # Treat this like a 'no games' scenario for V3
+          is_v3_no_data_msg <- TRUE 
+        }
+      } else {
+        # V3 returned an error structure
+        sb_v3_err_msg <- v3_result_sb$message %||% "V3 fetch failed (unknown error)."
+      }
+      
+      # --- Attempt 2: ESPN Fallback (if V3 failed or returned no data) ---
+      is_espn_no_data_msg <- FALSE # Initialize ESPN no-data flag
       if (is.null(data_sb)) {
         print("Attempting ESPN scoreboard fallback...")
-        espn_result_sb <- tryCatch({ hoopR::espn_nba_scoreboard(season = current_date_espn) }, error = function(e) { list(error = TRUE, message = paste("espn internal error:", e$message)) })
-        is_espn_error_structure <- is.list(espn_result_sb) && !is.null(espn_result_sb$error) && isTRUE(espn_result_sb$error)
-        if (!is_espn_error_structure) {
+        espn_result_sb <- tryCatch({ 
+          hoopR::espn_nba_scoreboard(season = current_date_espn) 
+        }, error = function(e) { 
+          list(error = TRUE, message = paste("espn internal error:", e$message)) 
+        })
+        
+        is_espn_actual_error <- is.list(espn_result_sb) && isTRUE(espn_result_sb$error)
+        is_espn_no_data_msg <- is_espn_actual_error && grepl("no scoreboard data available", espn_result_sb$message, ignore.case = TRUE)
+        
+        if (!is_espn_actual_error) {
+          # ESPN Success - check if it actually contains data
           if(is.data.frame(espn_result_sb) && nrow(espn_result_sb) > 0) {
             espn_data <- espn_result_sb
             has_records_espn <- all(c("home_record", "away_record") %in% names(espn_data))
-            data_sb <- tryCatch({
+            # Try processing ESPN data
+            data_sb <- tryCatch({ 
               espn_data %>%
                 dplyr::select( gameId = game_id, gameStatus = status_name, gameTime = start_date, homeTeamName = home_team_name, homeTeamAbbr = home_team_abb, homeScore = home_score, homeLogo = home_team_logo, awayTeamName = away_team_name, awayTeamAbbr = away_team_abb, awayScore = away_score, awayLogo = away_team_logo, any_of(c(homeRecord_raw = "home_record", awayRecord_raw = "away_record")) ) %>%
                 dplyr::mutate( homeRecord = if(has_records_espn && exists("homeRecord_raw", where = .)) paste0("(", homeRecord_raw, ")") else NA_character_, awayRecord = if(has_records_espn && exists("awayRecord_raw", where = .)) paste0("(", awayRecord_raw, ")") else NA_character_, across(c(homeScore, awayScore), ~ as.integer(tidyr::replace_na(.x, NA))) ) %>%
                 dplyr::select(gameId, gameStatus, gameTime, homeTeamName, homeTeamAbbr, homeScore, homeLogo, homeRecord, awayTeamName, awayTeamAbbr, awayScore, awayLogo, awayRecord)
-            }, error = function(e_proc) { print(paste("Error processing ESPN scoreboard:", e_proc$message)); sb_espn_err_msg <<- paste("Proc fail:", e_proc$message); NULL })
-          } else { sb_espn_err_msg <- "ESPN success, but no game data." }
-        } else { sb_espn_err_msg <- espn_result_sb$message %||% "ESPN fetch failed (error structure)." }
+            }, error = function(e_proc) { 
+              print(paste("Error processing ESPN scoreboard:", e_proc$message))
+              sb_espn_err_msg <<- paste("ESPN Proc fail:", e_proc$message) # Assign error message
+              NULL # Return NULL on processing error
+            })
+          } else {
+            # ESPN Success structure, but no actual game data rows
+            sb_espn_err_msg <- "ESPN returned no game rows."
+            # Treat this like a 'no games' scenario for ESPN
+            is_espn_no_data_msg <- TRUE
+          }
+        } else {
+          # ESPN returned an error structure
+          sb_espn_err_msg <- espn_result_sb$message %||% "ESPN fetch failed (unknown error)."
+        }
+      } # End ESPN Fallback Check
+      
+      # --- Final Decision: Set rv_sb$data or rv_sb$error ---
+      if (!is.null(data_sb)) {
+        # SUCCESS: We got data from V3 or ESPN
+        rv_sb$data <- data_sb
+        rv_sb$error <- NULL 
+        print(paste("Scoreboard fetch SUCCESS:", nrow(data_sb), "games."))
+      } else {
+        # FAILURE: No data frame was successfully created
+        # Check if *both* attempts indicated "no games available"
+        if (is_v3_no_data_msg && is_espn_no_data_msg) {
+          print("Scoreboard fetch indicates NO GAMES for this date.")
+          rv_sb$data <- data.frame() # Set to EMPTY data frame
+          rv_sb$error <- NULL
+        } else {
+          # Assume a real technical error occurred
+          final_error_msg <- glue::glue("SB Data Unavailable. (V3: {sb_v3_err_msg %||% 'Fetch/Proc Failed'}) (ESPN: {sb_espn_err_msg %||% 'Fetch/Proc Failed'})")
+          rv_sb$error <- final_error_msg
+          rv_sb$data <- NULL
+          print(paste("Scoreboard fetch FAILED (Technical Error):", rv_sb$error))
+        }
       }
-      if (!is.null(data_sb)) { rv_sb$data <- data_sb; print(paste("Scoreboard fetch SUCCESS:", nrow(data_sb), "games.")) }
-      else { rv_sb$error <- glue::glue("SB Unavail. (V3: {sb_v3_err_msg %||% 'Fail'}) (ESPN: {sb_espn_err_msg %||% 'Fail'})"); print(paste("Scoreboard fetch FAILED:", rv_sb$error)) }
+      
       print("--- Finished fetch_scoreboard_data ---")
     } # End fetch_scoreboard_data
     
     # --- SEPARATE Fetch Function for Standings ---
+    # (No changes needed in this specific function)
     fetch_standings_data <- function(fetch_date) {
-      # (Code from previous correct version)
       current_season_year_st <- as.numeric(format(fetch_date, "%Y"))
       season_start_year_st <- if(as.numeric(format(fetch_date, "%m")) < 10) current_season_year_st - 1 else current_season_year_st
       end_year_short_st <- (season_start_year_st + 1) %% 100
@@ -170,7 +245,7 @@ mod_welcome_server <- function(id){
     } # End fetch_standings_data
     
     # --- Helper Function to Fetch Specific Leader Category ---
-    # (Defined in previous step - ensure it's here)
+    # (No changes needed in this specific function)
     fetch_leader_category <- function(stat_category, rv_target, fetch_date, season_slug_override = NULL) {
       season_slug_ld <- if (!is.null(season_slug_override)) {
         season_slug_override
@@ -241,47 +316,67 @@ mod_welcome_server <- function(id){
     } # End fetch_leader_category function
     
     # --- Auto-Refresh Timer (Shared) ---
-    auto_refresh <- reactiveTimer(900000) # 15 minutes
+    auto_refresh <- reactiveTimer(900000) # 15 minutes (Remains the same)
     
-    # --- SINGLE Observer to Trigger ALL Fetches ---
+    # --- *** NEW: Observer for SCOREBOARD ONLY *** ---
     observe({
-      current_date_to_fetch <- selected_date()
-      timer_val <- auto_refresh()
+      # Triggered by date change OR refresh timer
+      date_trigger <- selected_date()
+      refresh_trigger <- auto_refresh() 
       
-      print(paste("AUTO/DATE TRIGGER (All): Fetching ALL for date:", format(current_date_to_fetch, "%Y-%m-%d")))
+      req(date_trigger) # Make sure we have a valid date selected
       
-      # Call scoreboard and standings fetches
-      fetch_scoreboard_data(current_date_to_fetch)
-      Sys.sleep(0.2) # Small pause between different API types
-      fetch_standings_data(current_date_to_fetch)
-      Sys.sleep(0.2)
+      print(paste("SCOREBOARD TRIGGER: Fetching for date:", format(date_trigger, "%Y-%m-%d")))
       
-      # Calculate season slug once for all leader fetches
-      current_season_year_ld <- as.numeric(format(current_date_to_fetch, "%Y"))
-      season_start_year_ld <- if(as.numeric(format(current_date_to_fetch, "%m")) < 10) current_season_year_ld - 1 else current_season_year_ld
+      # Fetch ONLY scoreboard data using the selected date
+      fetch_scoreboard_data(date_trigger)
+      
+      print("--- Finished SCOREBOARD fetch triggered by observer ---")
+    }) # End Scoreboard Observer
+    
+    
+    # --- *** NEW: Observer for STANDINGS and LEADERS ONLY *** ---
+    observeEvent(auto_refresh(), {
+      # Triggered ONLY by the refresh timer (and runs once initially)
+      print("STANDINGS/LEADERS TRIGGER: Fetching current season data.")
+      
+      # Use the current system date to determine the relevant season for standings/leaders
+      current_system_date <- Sys.Date() 
+      
+      # Fetch Standings for the current season
+      fetch_standings_data(current_system_date) 
+      Sys.sleep(0.2) # Keep pause between different API types
+      
+      # Fetch Leaders for the current season
+      # Calculate the 'current' season slug once, based on system date
+      current_season_year_ld <- as.numeric(format(current_system_date, "%Y"))
+      season_start_year_ld <- if(as.numeric(format(current_system_date, "%m")) < 10) current_season_year_ld - 1 else current_season_year_ld
       end_year_short_ld <- (season_start_year_ld + 1) %% 100
       common_season_slug_ld <- sprintf("%d-%02d", season_start_year_ld, end_year_short_ld)
       
-      # Call the helper for each leader category
-      fetch_leader_category("PTS", rv_ld_pts, current_date_to_fetch, common_season_slug_ld)
+      # Fetch each leader category using the system date / current season slug
+      fetch_leader_category("PTS", rv_ld_pts, current_system_date, common_season_slug_ld)
       Sys.sleep(0.6) # Keep longer pause between leader API calls
-      fetch_leader_category("AST", rv_ld_ast, current_date_to_fetch, common_season_slug_ld)
+      fetch_leader_category("AST", rv_ld_ast, current_system_date, common_season_slug_ld)
       Sys.sleep(0.6)
-      fetch_leader_category("REB", rv_ld_reb, current_date_to_fetch, common_season_slug_ld)
+      fetch_leader_category("REB", rv_ld_reb, current_system_date, common_season_slug_ld)
       Sys.sleep(0.6)
-      fetch_leader_category("BLK", rv_ld_blk, current_date_to_fetch, common_season_slug_ld)
+      fetch_leader_category("BLK", rv_ld_blk, current_system_date, common_season_slug_ld)
       Sys.sleep(0.6)
-      fetch_leader_category("STL", rv_ld_stl, current_date_to_fetch, common_season_slug_ld)
+      fetch_leader_category("STL", rv_ld_stl, current_system_date, common_season_slug_ld)
       
-      print("--- Finished ALL fetches triggered by observer ---")
-    })
+      print("--- Finished STANDINGS/LEADERS fetch triggered by observer ---")
+      
+    }, ignoreInit = FALSE) # IMPORTANT: ignoreInit = FALSE ensures this runs once when the app starts
+    # End Standings/Leaders Observer
     
     
     # --- Render Scoreboard UI (Uses rv_sb) ---
-    # (Code unchanged from previous version)
+    # (No changes needed in this render function)
     output$scoreboard_output <- renderUI({
       if (!is.null(rv_sb$error)) { return(tags$div(class = "validation-error-message", rv_sb$error)) }
-      if (is.null(rv_sb$data) && is.null(rv_sb$error)) { return(tags$p("Loading scoreboard...", style="color: #aaaaaa; text-align: center;")) }
+      # if (is.null(rv_sb$data) && is.null(rv_sb$error)) { return(tags$p("Loading scoreboard...", style="color: #aaaaaa; text-align: center;")) } # Handled by spinner
+      if (is.null(rv_sb$data) && is.null(rv_sb$error)) { return(tagList()) } # Return empty if loading
       if (is.data.frame(rv_sb$data) && nrow(rv_sb$data) == 0) { return(tags$p(glue::glue("No games found for {format(selected_date(), '%a, %b %d')}."), style="color: #aaaaaa; text-align: center;")) }
       if (is.data.frame(rv_sb$data)) {
         game_cards <- tryCatch({
@@ -310,10 +405,11 @@ mod_welcome_server <- function(id){
     }) # End renderUI scoreboard_output
     
     # --- Render Standings UI (Uses rv_st) ---
-    # (Code unchanged from previous version)
+    # (No changes needed in this render function)
     output$standings_output <- renderUI({
       if (!is.null(rv_st$error)) { return(tags$div(class = "validation-error-message", rv_st$error)) }
-      if (is.null(rv_st$data) && is.null(rv_st$error)) { return(tags$p("Loading standings...", style="color: #aaaaaa; text-align: center;")) }
+      # if (is.null(rv_st$data) && is.null(rv_st$error)) { return(tags$p("Loading standings...", style="color: #aaaaaa; text-align: center;")) } # Handled by spinner
+      if (is.null(rv_st$data) && is.null(rv_st$error)) { return(tagList()) } # Return empty if loading
       if (!is.data.frame(rv_st$data) || nrow(rv_st$data) == 0) { return(tags$p("Standings data unavailable or empty.", style="color: #aaaaaa; text-align: center;")) }
       standings <- rv_st$data
       east_standings <- if(any(standings$conf == "East")) standings %>% filter(conf == "East") %>% select(any_of(c(Rank="confRank", Team="teamName", W="W", L="L", Pct="Pct", GB="GB", Strk="Strk"))) else data.frame()
@@ -334,15 +430,14 @@ mod_welcome_server <- function(id){
     }) # End renderUI standings_output
     
     # --- Helper function to render a leader list UI ---
-    # (Defined in previous step - ensure it's here)
+    # (No changes needed in this helper function itself)
     render_leader_list <- function(rv_data_source, category_title) {
       renderUI({
         if (!is.null(rv_data_source$error)) {
           return(tags$div(class = "validation-error-message", paste("Error loading", category_title, ":", rv_data_source$error)))
         }
-        if (is.null(rv_data_source$data) && is.null(rv_data_source$error)) {
-          return(tags$p(paste("Loading", category_title, "..."), style="color: #aaaaaa; text-align: center; font-size: 0.9em;"))
-        }
+        # if (is.null(rv_data_source$data) && is.null(rv_data_source$error)) { return(tags$p(paste("Loading", category_title, "..."), style="color: #aaaaaa; text-align: center; font-size: 0.9em;")) } # Handled by spinner
+        if (is.null(rv_data_source$data) && is.null(rv_data_source$error)) { return(tagList()) } # Return empty if loading
         if (is.data.frame(rv_data_source$data) && nrow(rv_data_source$data) == 0) {
           return(tags$p(paste("No", category_title, "data available."), style="color:#aaaaaa; font-size: 0.9em; margin-top: 5px; margin-bottom: 10px;")) # Added margin
         }
@@ -375,6 +470,7 @@ mod_welcome_server <- function(id){
     } # End render_leader_list function
     
     # --- Render Leader Lists using Helper ---
+    # (No changes needed here, they use the correct reactive values)
     output$leaders_pts_output <- render_leader_list(rv_ld_pts, "Points per game")
     output$leaders_ast_output <- render_leader_list(rv_ld_ast, "Assists per game")
     output$leaders_reb_output <- render_leader_list(rv_ld_reb, "Rebounds per game")
