@@ -1,8 +1,7 @@
 ![image](https://github.com/user-attachments/assets/4db4fc18-7dee-494f-b2c9-677a3ca2592d)# NBA Dashboard - CS 226 Data Analytics Project
 
 ![NBA Dashboard - Overview Tab Screenshot]![image](https://github.com/user-attachments/assets/6a25b153-e46b-49c8-9cba-3d1b3b03aaf0)
-)
-)
+
 
 ## Project Description
 
