@@ -1,0 +1,1575 @@
+/* www/custom.css */
+
+/* ==========================================================================
+   Base & Theme
+   ========================================================================== */
+body {
+  background-color: #100E17 !important; /* IMPROVEMENT: Even darker base, closer to deep space */
+  color: #e0e0e0 !important;
+  font-family: "Fira Code", monospace, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !important;
+  line-height: 1.6;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: "Fira Code", monospace, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !important;
+  color: #ffffff;
+  margin-top: 1.5rem;
+  margin-bottom: 1rem;
+  font-weight: 600;
+}
+
+h3 { font-size: 1.85rem; }
+h4 { font-size: 1.5rem; color: #00AEEF; margin-bottom: 0.75rem;} /* IMPROVEMENT: Using navbar cyan for H4 */
+h5 { font-size: 1.2rem; color: #cccccc; margin-bottom: 0.5rem;}
+
+
+p {
+  color: #b3b3b3;
+  margin-bottom: 1rem;
+}
+
+a {
+  color: #00AEEF; /* IMPROVEMENT: Consistent with navbar cyan */
+  text-decoration: none;
+  transition: color 0.2s ease-in-out;
+}
+a:hover {
+  color: #4Dc3F0; /* Lighter cyan */
+  text-decoration: underline;
+}
+
+.form-control, .selectize-input, label, button, .btn,
+.dataTables_wrapper, .nav-pills .nav-link, .nav-tabs .nav-link {
+  font-family: "Fira Code", monospace, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !important;
+}
+
+.selectize-input, .form-control, input[type="text"], input[type="search"],
+select, textarea {
+  background-color: #181522 !important; /* IMPROVEMENT: Darker, purple-tinted input */
+  color: #f0f0f0 !important;
+  border: 1px solid #3A3052 !important; /* IMPROVEMENT: Purple-tinted border */
+  border-radius: 0.25rem;
+  transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+  padding: 0.375rem 0.75rem;
+}
+.form-control:focus, .selectize-input.focus {
+  border-color: #00AEEF !important; /* Cyan focus */
+  box-shadow: 0 0 0 0.2rem rgba(0, 174, 239, 0.25) !important;
+}
+label, .control-label {
+  color: #f0f0f0 !important;
+  font-weight: 500;
+  margin-bottom: 0.3rem;
+}
+label strong {
+    font-weight: 600 !important;
+}
+
+
+/* Buttons */
+.btn {
+  transition: all 0.2s ease-in-out;
+  border-radius: 0.25rem;
+  font-weight: 500;
+}
+.btn-primary {
+  background-color: #00AEEF !important; /* Cyan */
+  border-color: #00AEEF !important;
+  color: #100E17 !important; /* Dark text on bright button */
+}
+.btn-primary:hover, .btn-primary:focus {
+  background-color: #0095CC !important; /* Darker cyan */
+  border-color: #0095CC !important;
+  color: #ffffff !important;
+}
+.btn-outline-light { /* For date nav buttons */
+    color: #cccccc !important;
+    border-color: #4A406A !important; /* IMPROVEMENT: Purple-tinted border */
+    background-color: transparent !important;
+}
+.btn-outline-light:hover {
+    color: #ffffff !important;
+    background-color: rgba(0, 174, 239, 0.1) !important; /* Cyan tint on hover */
+    border-color: #00AEEF !important;
+}
+
+
+/* Horizontal Rule */
+hr {
+  border-top: 1px solid #3A3052 !important; /* IMPROVEMENT: Purple-tinted hr */
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+/* Validation/Error Message Styling */
+.validation-error-message {
+  color: #F4008A !important; /* Pink for errors */
+  font-weight: 500 !important;
+  background-color: rgba(244, 0, 138, 0.1) !important;
+  padding: 10px 15px;
+  border: 1px solid rgba(244, 0, 138, 0.3);
+  border-radius: 4px;
+  margin: 15px auto;
+  text-align: center;
+}
+
+/* bslib Cards */
+.card {
+  background-color: #1A1527 !important; /* IMPROVEMENT: Dark, slightly desaturated purple, harmonizing with navbar */
+  border: 1px solid #2D2640 !important; /* IMPROVEMENT: Related border color */
+  border-radius: 6px;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2); /* IMPROVEMENT: Softer shadow for depth */
+}
+.card-header {
+  background-color: #241E33 !important; /* IMPROVEMENT: Slightly lighter than card body for header */
+  color: #ffffff !important;
+  border-bottom: 1px solid #2D2640 !important; /* Match card border */
+  padding: 0.75rem 1.25rem;
+  font-weight: 500;
+}
+.card-header h4, .card-header h5 {
+  color: #ffffff !important;
+  margin-bottom: 0;
+}
+.card-body {
+  padding: 1.25rem;
+  color: #c0c0c0;
+}
+
+/* TabsetPanel Styling (Pills) */
+.nav-pills .nav-item {
+    margin-right: 5px;
+    margin-bottom: 5px;
+}
+.nav-pills .nav-link {
+  color: #b0b0b0;
+  background-color: #2D2640; /* IMPROVEMENT: Tab background */
+  border: 1px solid #3A3052;
+  font-weight: 500;
+  transition: all 0.2s ease-in-out;
+  border-radius: 0.25rem;
+  padding: 0.5rem 1rem;
+}
+.nav-pills .nav-link.active, .nav-pills .show > .nav-link {
+  color: #ffffff;
+  background-color: #00AEEF; /* Cyan for active pill */
+  border-color: #00AEEF;
+}
+.nav-pills .nav-link:hover:not(.active) {
+  background-color: #3A3052; /* Darker purple tint */
+  border-color: #504573;
+  color: #ffffff;
+}
+
+
+/* Consistent Scrollbar Styling */
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track { background: #100E17; border-radius: 5px; } /* IMPROVEMENT: Match new body BG */
+::-webkit-scrollbar-thumb { background-color: #3A3052; border-radius: 5px; border: 2px solid #100E17; } /* IMPROVEMENT: Purple-tinted thumb */
+::-webkit-scrollbar-thumb:hover { background-color: #504573; }
+* { scrollbar-width: thin; scrollbar-color: #3A3052 #100E17; }
+
+/* ==========================================================================
+   Navbar Styling
+   ========================================================================== */
+.navbar {
+  background-color: #20182D !important; /* Vapor dark purple - kept as is, good base */
+  border-bottom: 2px solid #F4008A !important; /* Vapor pink/magenta accent - kept */
+  padding-top: 0.3rem !important;
+  padding-bottom: 0.3rem !important;
+}
+.navbar-brand, .navbar-brand:hover, .navbar-brand:focus {
+  color: #00AEEF !important; /* Vapor cyan - kept */
+  font-weight: 700 !important;
+  font-size: 1.5rem !important;
+}
+.navbar-brand img {
+  vertical-align: middle !important;
+  margin-right: 10px;
+  margin-top: -5px;
+}
+.navbar-nav > li > a.nav-link,
+.navbar-nav > li > a.nav-link:focus {
+  color: #D0D0D0 !important;
+  font-weight: 500 !important;
+  font-size: 1.05rem !important;
+  padding: 0.8rem 1rem !important;
+  margin-left: 5px; margin-right: 5px;
+  border-bottom: 3px solid transparent !important;
+}
+.navbar-nav > li > a.nav-link:hover {
+  color: #ffffff !important;
+  border-bottom-color: #00AEEF !important; /* Vapor cyan hover - kept */
+}
+.navbar-nav > li.active > a.nav-link,
+.navbar-nav > .nav-item.active > a.nav-link,
+.navbar-nav > li.active > a.nav-link:hover,
+.navbar-nav > li.active > a.nav-link:focus {
+  color: #ffffff !important;
+  background-color: transparent !important;
+  border-bottom: 3px solid #F4008A !important; /* Active tab has pink accent - kept */
+  font-weight: 700 !important;
+}
+.navbar-toggler { border-color: rgba(0, 174, 239, 0.5) !important; }
+.navbar-toggler-icon { background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(0, 174, 239, 0.9)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e") !important; }
+
+
+/* ==========================================================================
+   Module-Specific Styles for mod_overview
+   ========================================================================== */
+
+/* --- News Section (mod_overview) --- */
+.news-scroll-container {
+  display: flex;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  overflow-y: hidden;
+  gap: 15px;
+  padding: 15px 10px;
+  min-height: 220px;
+  align-items: stretch;
+}
+a.news-card {
+  flex: 0 0 250px;
+  min-height: 200px;
+  background-color: #241E33; /* IMPROVEMENT: Match card header BG for news items */
+  border: 1px solid #2D2640; /* IMPROVEMENT: Match card border */
+  border-radius: 5px;
+  text-decoration: none;
+  color: #d0d0d0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+a.news-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  color: #ffffff;
+  border-color: #00AEEF; /* Cyan border on hover */
+}
+.news-card img.news-image {
+  width: 100%;
+  height: 120px;
+  object-fit: cover;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+  background-color: #333;
+  display: block;
+  border-bottom: 1px solid #2D2640; /* IMPROVEMENT */
+}
+.news-card .news-headline {
+  padding: 10px 12px;
+  font-size: 0.9em;
+  line-height: 1.4;
+  color: #d0d0d0;
+  flex-grow: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+}
+a.news-card:hover .news-headline {
+    color: #ffffff;
+}
+.news-scroll-container .loading-msg,
+.news-scroll-container .error-msg {
+   color: #cccccc; text-align: center; padding: 20px; font-style: italic;
+   width: 100%; align-self: center; min-height: 150px; display: flex;
+   align-items: center; justify-content: center;
+}
+
+/* www/custom.css */
+
+/* ... (Keep other existing styles) ... */
+
+/* --- Scoreboard Section (mod_overview) --- */
+.date-nav-container-scoreboard { 
+  display: flex; 
+  align-items: center; 
+  justify-content: space-between; 
+  margin-bottom: 10px; /* Reduced margin */
+  gap: 8px; 
+  padding: 5px 0;
+  border-bottom: 1px solid #3A3052;
+}
+
+.date-nav-container-scoreboard .btn-sm {
+  padding: 0.25rem 0.5rem;
+  font-size: 0.9rem; 
+  background-color: #2D2640; /* Match tab background */
+  border-color: #3A3052;
+  color: #b0b0b0;
+}
+.date-nav-container-scoreboard .btn-sm:hover {
+  background-color: #3A3052;
+  border-color: #504573;
+  color: #ffffff;
+}
+
+
+#overview_module-current_date_display_scoreboard span { 
+  text-align: center; 
+  font-weight: 600; /* Bolder date */
+  font-size: 1.15em; /* Slightly larger date */
+  color: #EAEAEA; /* Brighter date text */
+  flex-grow: 1; 
+}
+
+.scoreboard-scroll-container {
+  max-height: 360px; /* Adjust as needed */
+  overflow-y: auto;
+  padding-right: 5px; 
+}
+
+.sb-game-card {
+    background-color: #241E33; 
+    border: 1px solid #2D2640; 
+    border-radius: 5px;
+    margin-bottom: 8px; 
+    padding: 10px 12px; /* Slightly more padding */
+    font-size: 0.9em; 
+}
+.sb-game-card:hover {
+    border-color: #00AEEF;
+}
+
+/* Removing or restyling sb-top-bar as it's not prominent in the new image */
+.sb-top-bar {
+  /* display: none; */ /* Option 1: Hide it if game status will be part of score area */
+  text-align: center;
+  font-size: 0.75em;
+  color: #888;
+  margin-bottom: 5px;
+  padding-bottom: 3px;
+  border-bottom: 1px dashed #3A3052; /* Make it less prominent */
+}
+.sb-game-status { 
+  font-weight: normal; 
+  color: #aaa; 
+}
+
+.sb-main-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.sb-team {
+  display: flex;
+  flex-direction: column; /* Stack logo (optional), name, record */
+  align-items: center;   /* Center items if stacked */
+  gap: 2px;              /* Small gap between name and record */
+  width: calc(50% - 45px); /* Adjust width based on score area */
+  text-align: center;
+}
+
+/* If you want logos above team names as in some scoreboards (not clear from this specific image if logos are present) */
+.sb-team-logo {
+  height: 40px; /* Adjust if you want logos */
+  width: 40px;
+  object-fit: contain;
+  margin-bottom: 3px; /* Space below logo if present */
+  /* display: none; */ /* Uncomment this if NO logos are to be shown in this scoreboard style */
+}
+
+.sb-team-details { /* This div might not be strictly needed if sb-team is flex-column */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  line-height: 1.2;
+}
+
+.sb-team-name {
+  font-weight: 600; /* Bolder team names */
+  color: #e0e0e0;
+  font-size: 1.15em; /* Approx 20% bigger: 0.9em * 1.2 = 1.08em, rounding to 1.1em or 1.15em */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: block; /* Ensure it takes its own line if needed */
+}
+
+.sb-team-record {
+  font-size: 0.8em; 
+  color: #999999; /* Lighter grey for record */
+  display: block; /* Ensure it takes its own line */
+}
+
+.sb-score-area {
+  display: flex;
+  align-items: center; 
+  justify-content: center;
+  text-align: center;
+  padding: 0 5px; 
+  min-width: 90px; /* Adjust as needed */
+}
+
+.sb-score-value { /* Styling for the actual score number */
+  font-size: 2.2em;  /* Large font for scores, adjust based on .sb-game-card base */
+  font-weight: 700;  /* Bold scores */
+  color: #ffffff;    /* White scores */
+  line-height: 1;    /* Ensure digits align well if they have different heights */
+  padding: 0 2px;  /* Minimal padding around score numbers */
+  letter-spacing: -1px; /* Make numbers a bit tighter if needed */
+}
+
+.sb-score-separator { /* For the 'vs' text */
+  margin: 0 5px; 
+  color: #888888; 
+  font-size: 0.85em; /* Relative to .sb-game-card base font */
+  font-weight: normal;
+  align-self: center; 
+  line-height: normal; 
+}
+
+.sb-team-winner .sb-team-name,
+.sb-team-winner .sb-score-value { /* Highlight winner */
+  color: #76c77a; /* Green for winner, you can adjust */
+}
+
+/* --- Standings Table (mod_overview) --- */
+.standings-conference { margin-bottom: 20px; }
+.standings-header {
+    color: #ffffff;
+    border-bottom: 1px solid #3A3052; /* IMPROVEMENT */
+    padding-bottom: 8px;
+    margin-bottom: 10px;
+    text-align: center;
+    font-size: 1.1rem;
+    font-weight: 500;
+}
+.standings-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9em; /* Slightly larger than before for readability, adjust as needed */
+    /* background-color: #1A1527; */ /* Table itself doesn't need a BG if rows/cells have it */
+}
+.standings-table th {
+    background-color: transparent !important; /* Header BG transparent like image */
+    color: #E0E0E0 !important; /* Light text for header */
+    padding: 10px 8px; /* Adjust padding */
+    border-bottom: 1px solid #3A3052 !important; 
+    white-space: nowrap;
+    font-weight: 600; /* Bolder header text */
+}
+.standings-table td {
+    padding: 8px 8px; /* Adjust padding */
+    border-bottom: 1px solid #241E33; 
+    white-space: nowrap;
+    color: #c0c0c0;
+    /* vertical-align: middle; /* Already set in renderUI style but can be reinforced */
+}
+
+/* Remove default striping from .table-striped if you added it via class and don't want it */
+.standings-table tbody tr:nth-child(even) td {
+    background-color: transparent !important; /* No striping like in the image */
+}
+.standings-table tbody tr:hover td {
+    background-color: rgba(0, 174, 239, 0.05) !important; /* Very subtle cyan tint hover */
+    color: #ffffff !important;
+}
+
+/* Specific alignment for columns in standings table */
+.standings-table th:first-child,
+.standings-table td:first-child { /* Team column */
+    text-align: left !important;
+    padding-left: 10px; /* Add some padding for the first column */
+}
+
+.standings-table th:not(:first-child),
+.standings-table td:not(:first-child) { /* W, L, W/L%, GB columns */
+    text-align: center !important;
+}
+
+.team-logo-inline {  /* You can adjust this value - e.g., 18px, 20px, 22px */
+  width: auto;             /* Let width adjust to maintain aspect ratio */
+  /* OR, if you want them to be forced into a square of 20x20: */
+  /* width: 20px !important; */
+  /* object-fit: contain; */ /* Ensures the whole logo is visible within the dimensions, might leave empty space */
+  object-fit: scale-down; /*  Scales down if larger, otherwise uses original size if smaller. Good for small icons. */
+  margin-right: 8px;       /* Space between logo and team name */
+  vertical-align: middle;  /* Helps align with the text */
+  display: inline-block;   /* Ensures vertical-align works as expected */
+}
+
+/* Ensure card body containing the standings tables has enough padding or no padding if tables manage it */
+.card-body .fluidRow .col-md-6 { /* Targeting the columns holding each table */
+  padding-left: 5px;
+  padding-right: 5px;
+}
+.card-body .table-responsive {
+  margin-bottom: 0; /* Remove extra margin if table is the last element */
+}
+
+/* Adjust the h5 for conference titles if needed */
+h5.conference-title { /* You can add this class to the h5 tags in mod_overview.R */
+  text-align:center; 
+  color: #E0E0E0; 
+  margin-bottom: 10px;
+  font-weight: 600; /* Make conference titles bolder */
+  font-size: 1.1rem; /* Adjust size */
+}
+
+/* --- League Leaders List (mod_overview) - NO IMAGES --- */
+.leader-list-container { 
+  margin-bottom: 15px; 
+}
+.leaders-header { 
+    color: #E0E0E0; 
+    border-bottom: 1px solid #3A3052; 
+    padding-bottom: 6px;
+    margin-top: 0; 
+    margin-bottom: 8px;
+    font-size: 1.0rem; 
+    font-weight: 500;
+}
+.leader-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+.leader-item.leader-item-no-image { /* Specific class for items without images */
+    display: flex;
+    align-items: center; /* Vertically center content */
+    padding: 6px 2px; 
+    border-bottom: 1px solid #241E33; 
+    gap: 8px; /* Gap between rank, details, stat */
+    min-height: 40px; /* Slightly reduced min-height */
+}
+.leader-item:last-child { border-bottom: none; }
+
+.leader-rank {
+    color: #888888; font-size: 0.8em; /* Increased size slightly */
+    min-width: 20px; 
+    text-align: right; font-weight: 500;
+    flex-shrink: 0; /* Prevent rank from shrinking */
+}
+/* No .leader-headshot style needed anymore */
+
+.leader-details {
+    display: flex; 
+    flex-direction: column; 
+    flex-grow: 1; /* Allow details to take up available space */
+    line-height: 1.25; 
+    overflow: hidden;
+    /* If no image, details don't need to be pushed by an image width */
+}
+.leader-name {
+    color: #d0d0d0; 
+    font-weight: 500; 
+    font-size: 0.9em; /* Adjusted size */
+    white-space: nowrap; 
+    overflow: hidden; 
+    text-overflow: ellipsis;
+}
+.leader-team { 
+    color: #888888; 
+    font-size: 0.75em; /* Adjusted size */
+}
+.leader-stat {
+    color: #00AEEF; 
+    font-weight: 600;
+    font-size: 0.95em; /* Adjusted size */
+    min-width: 40px; /* Ensure space for stat value */
+    text-align: right; 
+    flex-shrink: 0; /* Prevent stat from shrinking */
+}
+
+/* --- REVISED Static Playoff Bracket Styles --- */
+
+/* Ensure the card body itself doesn't constrain the bracket too much initially.
+   The outer-wrapper will handle the scrolling. */
+.card-body[style*="overflow-x: auto;"] {
+    padding: 5px !important; /* Minimal padding on card body */
+}
+
+.playoff-bracket-outer-wrapper {
+  width: 100%;
+  overflow-x: auto; /* KEY: Enable horizontal scrolling on this wrapper */
+  background-color: #161220; /* Darker background for the immediate bracket area */
+  padding: 15px 10px; /* Padding around the entire bracket content */
+  border-radius: 4px;
+  border: 1px solid #2D2640;
+}
+
+.playoff-bracket-grid-container {
+  display: flex; /* KEY: Makes children (columns) arrange in a row */
+  flex-direction: row;
+  justify-content: flex-start; /* Align columns to the start */
+  min-width: 1700px; /* KEY: Total width for all columns. Adjust this sum based on column widths below. This forces scrolling. */
+                      /* Example: (250*2) + (230*2) + (230*2) + 280 = 500+460+460+280 = 1700px */
+  gap: 20px; /* Increased gap between columns for visual separation */
+  align-items: flex-start; /* Align columns to the top */
+}
+
+.playoff-grid-column {
+  display: flex;
+  flex-direction: column; /* Matchups stack vertically within a column */
+  align-items: center; /* Center matchups horizontally in their column cell */
+  gap: 15px; /* Space between matchups in a column */
+  padding-top: 5px;
+  /* border: 1px solid transparent; */ /* For debugging column bounds if needed */
+}
+
+/* Define specific widths for each column type */
+.playoff-grid-column.west-r1-col,
+.playoff-grid-column.east-r1-col {
+  width: 250px; /* Width for First Round columns (typically 4 matchups) */
+  flex-shrink: 0; /* Prevent shrinking */
+}
+.playoff-grid-column.west-r2-col,
+.playoff-grid-column.east-r2-col {
+  width: 230px; /* Width for Semifinals columns (typically 2 matchups) */
+  flex-shrink: 0;
+  justify-content: space-around; /* Helps vertically space out the 2 matchups */
+}
+.playoff-grid-column.west-r3-col,
+.playoff-grid-column.east-r3-col {
+  width: 230px; /* Width for Conference Finals columns (typically 1 matchup) */
+  flex-shrink: 0;
+  justify-content: center; /* Center the single matchup */
+}
+.playoff-grid-column.nba-finals-col {
+  width: 280px; /* Width for the Finals column */
+  flex-shrink: 0;
+  justify-content: center; /* Center the Finals matchup */
+  align-items: center; /* Center content like logo and header */
+}
+
+.playoff-column-header {
+  color: #EAEAEA;
+  font-weight: 600;
+  font-size: 0.9em;
+  text-align: center;
+  margin-bottom: 15px;
+  text-transform: uppercase;
+  width: 90%; /* Make header slightly less than column width */
+  padding: 6px 3px;
+  background-color: #2D2640;
+  border-radius: 3px;
+  border-bottom: 1px solid #4A406A;
+}
+.playoff-column-header.finals-header {
+  font-size: 1.05em;
+  color: #00AEEF; /* Cyan for finals title */
+  background-color: #3A3052;
+}
+
+.finals-logo-wrapper {
+  text-align: center;
+  margin-bottom: 10px;
+}
+.finals-main-logo {
+  width: 70px; 
+  height: auto;
+  margin-bottom: 8px;
+}
+
+.playoff-grid-column-content { /* Wrapper for matchups within a column, useful for spacing */
+    display: flex;
+    flex-direction: column;
+    gap: 15px; /* Consistent gap between matchups */
+    width: 100%;
+    align-items: center; /* Center matchups if column is wider */
+}
+
+/* Vertical Spacers - to push matchups down in columns with fewer items */
+.playoff-spacer {
+  width: 100%;
+  /* height is set inline in R, e.g., style="height: 100px;" */
+  /* border: 1px dashed red; */ /* For debugging spacers */
+}
+
+
+.playoff-matchup {
+  background-color: #272036; /* Slightly different from column BG */
+  border: 1px solid #3A3052; 
+  border-radius: 5px;
+  padding: 8px 10px; /* More padding */
+  width: 95%; /* Matchups take most of their column cell width */
+  max-width: 220px; /* Max width for a single matchup box */
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+  font-size: 0.85em;
+  display: flex;
+  flex-direction: column;
+  gap: 6px; 
+}
+
+.playoff-team {
+  display: flex;
+  align-items: center;
+  padding: 5px 2px; 
+  color: #d0d0d0; /* Lighter text for team names */
+}
+.playoff-team:first-of-type { /* Style for the top team in a matchup */
+  border-bottom: 1px solid #4A406A; 
+  margin-bottom: 5px; 
+  padding-bottom: 5px; 
+}
+
+.playoff-team-logo {
+  width: 22px; 
+  height: 22px;
+  object-fit: contain;
+  margin-right: 8px;
+  flex-shrink: 0;
+}
+
+.playoff-team-seed {
+  color: #b0b0b0; /* Lighter seed color */
+  font-size: 0.95em; 
+  margin-right: 6px;
+  min-width: 18px; 
+  text-align: right;
+  font-weight: 500;
+}
+
+.playoff-team-name {
+  color: #f0f0f0; /* Brightest text for team name */
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  flex-grow: 1;
+}
+
+.playoff-team.playoff-team-winner .playoff-team-name {
+  font-weight: 700;
+  color: #86dc8a; 
+}
+.playoff-team.playoff-team-winner .playoff-team-seed {
+  color: #86dc8a; 
+}
+
+
+.playoff-series-info {
+  font-size: 0.8em; 
+  color: #c0c0c0; /* Lighter series info */
+  text-align: center;
+  margin-top: 6px;
+  padding: 5px 3px;
+  border-top: 1px dashed #4A406A;
+  background-color: rgba(0,0,0,0.1); /* Subtle background for info */
+  border-radius: 3px;
+}
+.playoff-game-time {
+  font-size: 0.95em;
+  color: #00AEEF; 
+  font-weight: 500;
+  display: block; 
+  margin-top: 3px;
+}
+
+/* Scrollbar styling for the bracket wrapper */
+.playoff-bracket-outer-wrapper::-webkit-scrollbar {
+    height: 10px;
+    background-color: #100E17;
+}
+.playoff-bracket-outer-wrapper::-webkit-scrollbar-thumb {
+    background-color: #3A3052;
+    border-radius: 5px;
+    border: 2px solid #100E17;
+}
+.playoff-bracket-outer-wrapper::-webkit-scrollbar-thumb:hover {
+    background-color: #504573;
+}
+.playoff-bracket-outer-wrapper {
+    scrollbar-width: thin;
+    scrollbar-color: #3A3052 #100E17;
+}
+
+/* Ensure the card body for the bracket can scroll if content overflows */
+.card-body[style*="overflow-x: auto;"] {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+}
+.card-body[style*="overflow-x: auto;"]::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera */
+}
+.team { display: flex; align-items: center; padding: 6px 0; color: #d0d0d0; }
+.team:not(:last-child) { border-bottom: 1px solid #3A3052; } /* IMPROVEMENT */
+.team-logo-container { width: 22px; height: 22px; margin-right: 6px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.team-logo-container img.actual-team-logo { max-width: 100%; max-height: 100%; object-fit: contain; }
+.team-logo-placeholder { width: 22px; height: 22px; margin-right: 6px; font-size: 16px; line-height: 22px; text-align: center; color: #a0a0a0; background-color: #333; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.team-seed { font-size: 0.8em; color: #909090; margin-right: 5px; width: 18px; text-align: right; font-weight: 500; flex-shrink: 0; }
+.team-name { font-size: 0.85em; font-weight: 400; color: #e0e0e0; flex-grow: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.team.winner .team-name { font-weight: 600; color: #76c77a; }
+.team-score { font-size: 0.85em; font-weight: 600; color: #e0e0e0; margin-left: auto; padding-left: 6px; flex-shrink: 0; }
+.team.winner .team-score { background-color: rgba(118, 199, 122, 0.1); padding: 1px 4px; border-radius: 3px; }
+.series-result-info {
+    font-size: 0.75em; text-align: center; margin-top: 5px; padding: 3px;
+    background-color: #1A1527; /* IMPROVEMENT: Match card body */
+    border-radius: 3px; color: #b0b0b0; font-weight: 500;
+}
+.tbd-slot-container {
+    display: flex; flex-direction: column;
+    background-color: #241E33; /* IMPROVEMENT */
+    border: 1px dashed #504573; /* IMPROVEMENT */
+    border-radius: 5px; padding: 8px; margin-bottom: 20px; min-height: 70px;
+    align-items: center; justify-content: center;
+}
+.tbd-team-placeholder { display: flex; align-items: center; justify-content: center; width: 100%; padding: 6px 0; color: #777777; font-style: italic; font-weight: 500; font-size: 0.8em; }
+.tbd-team-placeholder:not(:last-child) { border-bottom: 1px solid #3A3052; } /* IMPROVEMENT */
+
+/* General spinner color */
+.shiny-spinner-output-container > .load-container > .loader,
+.shiny-spinner-output-container > .load-container > .loading-spinner {
+  border-top-color: #00AEEF !important; /* Cyan spinner */
+  border-left-color: #00AEEF !important;
+}
+
+/* Player Stats Module Specifics (mod_player_stats.R) */
+/* Ensure headshots and stat grid look good with the new theme */
+.player-img {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 150px; /* Or your preferred size */
+  height: auto; /* Maintain aspect ratio */
+  border-radius: 50%; /* Circular images */
+  border: 3px solid #00AEEF; /* Cyan border for emphasis */
+  background-color: #2D2640; /* Fallback bg color */
+  margin-bottom: 15px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+}
+
+.player-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); /* Responsive columns */
+  gap: 10px 15px; /* Row and column gap */
+  padding: 10px;
+  background-color: #241E33; /* Slightly lighter than card to make grid distinct */
+  border-radius: 4px;
+  border: 1px solid #2D2640;
+}
+
+.stat-item {
+  background-color: #1A1527; /* Match card body for individual items */
+  padding: 8px 10px;
+  border-radius: 3px;
+  border-left: 3px solid #00AEEF; /* Cyan accent line */
+  display: flex;
+  flex-direction: column; /* Stack label and value */
+  justify-content: center;
+  min-height: 50px; /* Ensure consistent height */
+}
+
+.stat-label strong {
+  color: #b0b0b0; /* Lighter grey for label */
+  font-size: 0.8em;
+  display: block;
+  margin-bottom: 3px;
+  text-transform: uppercase;
+}
+
+.stat-value {
+  color: #ffffff; /* White for stat value */
+  font-size: 1.1em;
+  font-weight: 600;
+}
+
+/* Styling for the Date Input in Scoreboard */
+#overview_module-scoreboard_date_picker .form-control { /* Target specific date input */
+  background-color: #181522 !important; 
+  color: #f0f0f0 !important;
+  border: 1px solid #3A3052 !important;
+  padding: 0.25rem 0.5rem; /* Smaller padding for a more compact look */
+  font-size: 0.9em;      /* Match button font size */
+  height: auto;          /* Let padding define height */
+}
+
+/* Date picker dropdown styling (can be tricky, depends on Bootstrap version and bslib) */
+.datepicker {
+  background-color: #1A1527 !important; /* Match card background */
+  border: 1px solid #3A3052 !important;
+  color: #e0e0e0 !important;
+}
+.datepicker table tr td.day:hover,
+.datepicker table tr td.focused {
+  background: #3A3052 !important; /* Hover color */
+}
+.datepicker table tr td.active,
+.datepicker table tr td.active:hover,
+.datepicker table tr td.active.disabled,
+.datepicker table tr td.active.disabled:hover {
+  background-color: #00AEEF !important; /* Active date color (cyan) */
+  background-image: none !important; /* Remove gradient if any */
+  color: #100E17 !important;
+}
+.datepicker table th.datepicker-switch,
+.datepicker table th.next,
+.datepicker table th.prev {
+  color: #00AEEF !important; /* Cyan for arrows and month switch */
+}
+.datepicker table th.dow {
+  color: #b0b0b0 !important; /* Day of week header color */
+}
+.datepicker table tr td.old,
+.datepicker table tr td.new {
+  color: #555 !important; /* Dimmer color for old/new month days */
+}
+
+
+/* ==========================================================================
+   Player Deep Dive Module Specific Styles (mod_player_deep_dive.R)
+   ========================================================================== */
+
+/* --- REFINED NBA-style Player Header CSS (Copied from standalone app.R) --- */
+.player-header-nba {
+  position: relative; 
+  width: 100%;
+  margin-bottom: 30px;
+  border-radius: 10px; 
+  overflow: visible; /* ALLOW headshot to overflow visually */
+  box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+  color: #FFFFFF; 
+}
+.player-header-nba-background { 
+  position: absolute;
+  top: 0; left: 0; width: 100%; height: 100%;
+  z-index: 0; 
+  border-radius: inherit; /* Match parent's border-radius */
+}
+.player-header-nba-content-wrapper { 
+  position: relative; 
+  z-index: 1; 
+}
+.player-header-nba-top-visual {
+  display: flex;
+  align-items: flex-end; 
+  padding: 25px 30px 15px 30px; /* Adjusted padding */
+  min-height: 220px; /* Slightly reduced min-height */
+  position: relative; 
+}
+.player-header-nba .team-logo-container {
+  position: absolute;
+  top: 25px; left: 30px; /* Consistent with padding */
+  width: 80px; 
+  height: 80px;
+  z-index: 3; 
+}
+.player-header-nba .team-logo-container img {
+  width: 100%; height: 100%;
+  object-fit: contain;
+}
+.player-header-nba .player-headshot-container {
+  position: absolute;
+  left: 40px; /* Start a bit from the left */
+  bottom: 0; 
+  width: 33%; 
+  max-width: 300px; 
+  min-width: 180px;
+  z-index: 2; 
+  transform: translateY(-60%); /* Value from standalone app - TEST THIS CAREFULLY */
+}
+.player-header-nba .player-headshot-container img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+.player-header-nba .player-name-details {
+  margin-left: calc(33% + 60px); 
+  padding-bottom: 10px; 
+  z-index: 1;
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.6); 
+}
+.player-header-nba .player-name-details .team-pos-jersey {
+  font-size: 0.9rem; font-weight: 500; color: rgba(255,255,255,0.9); margin-bottom: 4px;
+}
+.player-header-nba .player-name-details .player-name-main {
+  font-size: clamp(2.2rem, 4.5vw, 3.8rem); 
+  font-weight: 900; line-height: 1.0; text-transform: uppercase; margin: 0;
+}
+
+.player-header-nba-bottom-bar .item-label, 
+.player-header-nba-bottom-bar-row2 .item-label {
+  font-size: 0.6rem; /* Original from your design */
+  text-transform: uppercase; /* Original */
+  margin-bottom: 2px; /* Original */
+  color: rgba(255, 255, 255, 0.75) !important; /* ENSURE THIS IS PRESENT AND CORRECT: Light, semi-transparent white text */
+  /* Make sure there isn't another 'color' property for these selectors without !important that might be ignored */
+}
+.player-header-nba-bottom-bar .item-value, 
+.player-header-nba-bottom-bar-row2 .item-value {
+  font-size: 0.95rem; /* Original */
+  font-weight: 600; /* Original */
+  line-height: 1.15; /* Original */
+  color: #FFFFFF !important; /* Bright white text */
+}
+
+/* 
+  Specifically targets the PPG, RPG, APG values IN THE HEADER's bottom bar, 
+  to keep their distinct accent color.
+*/
+.player-header-nba-bottom-bar .item.stat-item .item-value.stat-value {
+  font-size: 1.5rem; /* Original */
+  font-weight: 700; /* Original */
+  color: #39FF14 !important; /* Your accent green color for these main stats */
+}
+/* Bottom Bars (Stats & Bio) for player header */
+.player-header-nba-bottom-bar, .player-header-nba-bottom-bar-row2 {
+  display: grid;
+  background-color: rgba(0,0,0,0.4); 
+  color: #FFFFFF;
+  border-top: 1px solid rgba(255,255,255,0.1);
+  position: relative; 
+  z-index: 1; 
+}
+.player-header-nba-bottom-bar { 
+  grid-template-columns: repeat(3, 1fr) repeat(4, 1.2fr); 
+}
+.player-header-nba-bottom-bar-row2 { 
+  grid-template-columns: repeat(4, 1fr); 
+  background-color: rgba(0,0,0,0.35); 
+}
+.player-header-nba-bottom-bar .item, .player-header-nba-bottom-bar-row2 .item {
+  padding: 10px 5px; text-align: center; 
+  border-right: 1px solid rgba(255,255,255,0.08);
+  display: flex; flex-direction: column; justify-content: center;
+  min-height: 60px; 
+}
+.player-header-nba-bottom-bar .item:last-child, .player-header-nba-bottom-bar-row2 .item:last-child {
+  border-right: none;
+}
+.player-header-nba-bottom-bar .item-label, .player-header-nba-bottom-bar-row2 .item-label {
+  font-size: 0.6rem; text-transform: uppercase; color: color: rgba(255, 255, 255, 0.7) !important; margin-bottom: 2px;
+}
+.player-header-nba-bottom-bar .item-value, .player-header-nba-bottom-bar-row2 .item-value {
+  font-size: 0.95rem; font-weight: 600; line-height: 1.15; color: #FFFFFF !important;
+}
+ .player-header-nba-bottom-bar .stat-value { /* Note: This class is used for PPG/RPG/APG values in the header */
+  font-size: 1.5rem; font-weight: 700; color: #39FF14 !important; /* Using accent-success from your original CSS idea */
+}
+
+/* Responsive adjustments for player header */
+@media (max-width: 1024px) {
+  .player-header-nba .player-headshot-container { width: 30%; transform: translateY(-60%); /* Adjust if needed */ left: 30px;}
+  .player-header-nba .player-name-details { margin-left: calc(30% + 50px); }
+  .player-header-nba .player-name-details .player-name-main { font-size: clamp(2rem, 4vw, 3.2rem); }
+}
+@media (max-width: 767px) {
+  .player-header-nba-top-visual { padding-bottom: 10px; min-height: auto; flex-direction: column; align-items: center; } /* Stack for mobile */
+  .player-header-nba .team-logo-container { width: 60px; height: 60px; top:15px; left:15px; position: absolute;} /* Keep logo top left */
+  .player-header-nba .player-headshot-container {
+    position: relative; 
+    width: 45%; max-width: 180px; min-width: 150px;
+    margin: 10px auto 0 auto; /* Changed margin for stacking */
+    transform: translateY(0); 
+    z-index: 2;
+  }
+  .player-header-nba .player-name-details { 
+      margin-left: 0; 
+      text-align:center; 
+      padding-top: 10px; 
+      width: 100%; /* Ensure it takes full width below headshot */
+  }
+  .player-header-nba .player-name-details .player-name-main { font-size: clamp(1.8rem, 6vw, 2.5rem); }
+  .player-header-nba-bottom-bar, .player-header-nba-bottom-bar-row2 { grid-template-columns: repeat(auto-fit, minmax(80px, 1fr)); }
+}
+@media (max-width: 480px) {
+   .player-header-nba .player-headshot-container { width: 40%; max-width: 150px; margin-top: 5px;}
+   .player-header-nba .player-name-details .player-name-main { font-size: clamp(1.5rem, 7vw, 2rem); }
+}      
+
+/* Player Bio Text Styling (mod_player_deep_dive.R) */
+.bio-text-scraped p {
+  margin-bottom: 1em;
+  line-height: 1.7;
+  color: var(--bs-body-color); /* Inherit from bslib theme */
+}
+.bio-text-scraped p:last-child {
+  margin-bottom: 0;
+}
+/* --- Stat Card Style V3 (Target Image Style with Dynamic Text Contrast) --- */
+.player-stats-grid-container {
+  /* (No changes needed here from previous step) */
+}
+.stat-card-row {
+  /* (No changes needed here from previous step) */
+}
+.stat-card-row > div[class^="col-"] {
+  margin-bottom: 15px; 
+}
+.stat-card-v3 {
+  /* background-color is set by inline style from R (team color) */
+  /* color is also set by inline style from R for base text contrast */
+  border: 1px solid rgba(0, 0, 0, 0.1); /* Darker border for better definition on light cards */
+  border-radius: 12px;       
+  padding: 18px 15px;       
+  text-align: left;          
+  box-shadow: 0 4px 8px rgba(0,0,0,0.15); /* Slightly softer shadow for light cards */
+  min-height: 130px;         
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; 
+  height: 100%; 
+}
+
+.stat-card-v3-abbr {
+  font-size: 0.9rem;        
+  font-weight: 600;         
+  color: inherit; /* Inherit color from .stat-card-v3 */
+  opacity: 0.85; 
+  margin-bottom: 6px;      
+  text-transform: uppercase;
+  line-height: 1.2;
+}
+
+.stat-card-v3-separator {
+  border: none;
+  border-top: 1px solid currentColor !important; /* currentColor uses the inherited text color */
+  opacity: 0.4; 
+  margin-top: 4px;    
+  margin-bottom: 10px; 
+  width: 100%;         
+}
+
+.stat-card-v3-value {
+  font-size: 2.6rem;        
+  font-weight: 700;         
+  color: inherit; /* Inherit color from .stat-card-v3 */
+  opacity: 1; /* Full opacity for the main value */
+  line-height: 1;
+  margin-bottom: 4px;       
+}
+
+.stat-card-v3-name {
+  font-size: 0.75rem;        
+  color: inherit; /* Inherit color from .stat-card-v3 */
+  opacity: 0.7; 
+  line-height: 1.3;
+  margin-top: 0;
+  margin-bottom: 0;         
+}
+
+/* Column padding (same as before) */
+.stats-section .fluidRow > .col-sm-12,
+.stats-section .fluidRow > .col-md-12,
+.stats-section .fluidRow > .col-lg-12,
+.stats-section .fluidRow > .col-xl-12,
+.stats-section .fluidRow > .col-sm-6, 
+.stats-section .fluidRow > .col-md-6,
+.stats-section .fluidRow > .col-lg-6,
+.stats-section .fluidRow > .col-xl-6,
+.stats-section .fluidRow > .col-sm-4, 
+.stats-section .fluidRow > .col-md-4,
+.stats-section .fluidRow > .col-lg-4,
+.stats-section .fluidRow > .col-xl-4 {
+  padding-left: 7.5px; 
+  padding-right: 7.5px; 
+}
+.stats-section .fluidRow {
+  margin-left: -7.5px;
+  margin-right: -7.5px;
+}
+/* These styles were in your project_snapshot's custom.css for Player Stats, so they should apply if classes match */
+/* If .stat-card, .stat-card-header, .stat-value, .stat-name are used by player deep dive's detailed stats, they should be styled by existing CSS. */
+/* The module uses these exact class names, so it should pick up existing styles. */
+
+
+
+.player-selection-block {
+  padding-left: 10px; 
+  padding-right: 10px;
+  margin-bottom: 15px; /* Add some space below selection blocks on small screens */
+}
+
+.player-selection-block h4 { /* Style for "Player 1 Selection" and "Player 2 Selection" */
+  color: #00AEEF; /* Match other H4s */
+  font-size: 1.3rem; /* Slightly smaller than main card headers */
+  margin-top: 5px;
+  margin-bottom: 15px; /* More space below header */
+  text-align: center;
+  border-bottom: 1px solid #3A3052;
+  padding-bottom: 8px;
+}
+
+.player-selection-block .form-group { /* Affects selectInputs within the block */
+  margin-bottom: 12px; /* Tighter spacing within a block */
+}
+
+.player-selection-block .selectize-control.single .selectize-input {
+  min-height: 38px; /* Standardize height */
+}
+
+
+/* Styling for DataTables in Player Comparison */
+#player_comparison_module-player1Table .dataTables_wrapper, /* Target specific DTs */
+#player_comparison_module-player2Table .dataTables_wrapper {
+  background-color: transparent !important;
+  color: #E0E0E0 !important;
+}
+
+#player_comparison_module-player1Table table.dataTable,
+#player_comparison_module-player2Table table.dataTable {
+  background-color: #241E33 !important; /* Darker background for the table itself */
+  color: #E0E0E0 !important;
+  border: 1px solid #3A3052 !important;
+  width: 100% !important; /* Ensure full width */
+}
+
+#player_comparison_module-player1Table table.dataTable th,
+#player_comparison_module-player2Table table.dataTable th {
+  background-color: #2D2640 !important; /* Header row background */
+  color: #FFFFFF !important;
+  border-bottom: 2px solid #4A406A !important;
+}
+
+#player_comparison_module-player1Table table.dataTable td,
+#player_comparison_module-player2Table table.dataTable td {
+  color: #C0C0C0 !important;
+  border-bottom: 1px solid #3A3052 !important;
+}
+
+#player_comparison_module-player1Table table.dataTable tr:hover td,
+#player_comparison_module-player2Table table.dataTable tr:hover td {
+  background-color: rgba(0, 174, 239, 0.1) !important; /* Cyan tint on hover */
+  color: #FFFFFF !important;
+}
+
+/* Remove default DataTable info/paging if dom='t' is used (already handled in module)*/
+.dataTables_info, .dataTables_paginate {
+  display: none !important;
+}
+
+/* Ensure card headers for player name tables look good */
+.card-header .shiny-text-output { /* Targets the textOutput for player names */
+  font-size: 1.1rem; /* Adjust as needed */
+  font-weight: 500;
+  color: #FFFFFF !important;
+}
+
+/* Chart specific theming (can be further refined) */
+/* For ggplot outputs, theme_minimal is used, bg="transparent" helps.
+   We can add more specific styling if needed here, e.g., legend text color */
+.shiny-plot-output text { /* General text elements in plots if not overridden by ggplot theme */
+  fill: #E0E0E0 !important; /* Light grey for general plot text */
+}
+
+.shiny-plot-output .legend text { /* Attempt to style legend text if it's SVG */
+  fill: #E0E0E0 !important;
+}
+
+
+
+/* Adjust spacing or appearance of the main title for the tab */
+#historical_trends_module-container h3 { /* Target by module ID if needed */
+  /* color: #00AEEF; */ /* Example: Match navbar accent if not default */
+  /* margin-top: 15px; */
+  margin-bottom: 15px !important; /* Ensure some space below main title */
+}
+
+/* Style for the introductory paragraph of the historical trends tab */
+#historical_trends_module-container > p { 
+  max-width: 900px; 
+  margin-left: auto;
+  margin-right: auto;
+  color: #b0b0b0; /* Slightly lighter than default if needed */
+}
+
+/* Styling for the column titles ("Regular Season Trends", "Playoff Trends") */
+#historical_trends_module-container .col-lg-6 h4 { /* Using col-lg-6 as per module layout */
+  color: #E0E0E0 !important; /* Lighter color for these sub-headers */
+  border-bottom: 1px solid #4A406A !important; /* Purple-tinted border */
+  padding-bottom: 8px !important;
+  margin-bottom: 20px !important; /* More space below column titles */
+  text-align:center;
+  font-weight: 500; /* Less bold than main H4s */
+}
+
+/* Styling for the individual plot titles (e.g., "3-Point Shooting Volume") */
+#historical_trends_module-container .col-lg-6 h5 {
+  color: #c0c0c0 !important; /* Subdued color for plot titles */
+  margin-top: 1.2rem; /* Space above plot titles */
+  margin-bottom: 8px !important; /* Less space below plot title, before plot */
+  font-size: 1.05rem;
+  font-weight: normal;
+}
+
+#historical_trends_module-container .plotly-output-wrapper .js-plotly-plot {
+  width: 100% !important;
+}
+
+#historical_trends_module-data_source_notes > div {
+  border-top: 1px solid #3A3052 !important; /* Purple-tinted border */
+  padding: 15px;
+  margin-top: 30px;
+  color: #909090; /* Dimmer color for notes */
+}
+
+
+/* --- Goat Discourse Module Specific Styles --- */
+.goat-main-title-row h4 {
+  color: #00AEEF; /* Example: Using navbar cyan for emphasis */
+  margin-top: 0px !important; 
+  margin-bottom: 15px !important;
+  padding-bottom: 5px;
+  border-bottom: 1px solid #444;
+}
+
+.goat-content-row {
+  margin-top: 10px;
+}
+
+.goat-individual-left-col h5,
+.goat-individual-right-col h5 {
+  color: #E0E0E0; /* Lighter text for sub-section headers */
+  margin-bottom: 10px;
+  margin-top: 15px; /* Space above these headers */
+  font-weight: 500;
+  text-align: center;
+}
+/* Adjust top margin specifically for the first h5 in each column if needed */
+.goat-individual-left-col > h5:first-child,
+.goat-individual-right-col > h5:first-child {
+  margin-top: 5px !important;
+}
+
+
+.individual-sentiment-donut-container {
+  background-color: #161220; /* Dark background for chart area */
+  padding: 10px;
+  border-radius: 4px;
+  border: 1px solid #2D2640;
+  margin-bottom: 15px !important; 
+}
+
+.example-phrases-container {
+  padding: 10px;
+  background-color: #1B172A; /* Slightly different background for this section */
+  border-radius: 4px;
+  border: 1px solid #2D2640;
+}
+.example-phrases-container h5 {
+  margin-top: 5px !important; /* Reduced top margin if it's the first element after an hr */
+}
+
+
+.twitter-phrase {
+  background-color: #241E33; /* Match card header */
+  border-left: 4px solid; /* Placeholder, color set by specific class */
+  padding: 10px 15px;
+  margin-bottom: 10px;
+  border-radius: 4px;
+  font-size: 0.9em;
+  color: #b0b0b0;
+  line-height: 1.5;
+}
+
+.twitter-phrase.positive-phrase-item {
+  border-left-color: #66BB6A; /* Green for positive */
+}
+
+.twitter-phrase.negative-phrase-item {
+  border-left-color: #EF5350; /* Red for negative */
+}
+
+.goat-wordcloud-container {
+  padding: 10px;
+  min-height: 510px; /* Ensure space for wordcloud2 */
+  background-color: #111111; /* Dark background for wordcloud */
+  border-radius: 4px;
+  border: 1px solid #2D2640;
+}
+
+/* Comparison View Specifics */
+#goat_discourse_module-compare_player_A_chosen, 
+#goat_discourse_module-compare_player_B_chosen {
+  font-weight: bold;
+  font-size: 1.1em;
+}
+
+.wellPanel, .well { /* Assuming wellPanel is used, or if you use bs4Dash::box or similar */
+  background-color: #1C182A !important; /* Slightly lighter than card bodies for contrast */
+  border: 1px solid #3A3052 !important;
+  padding: 15px;
+  border-radius: 4px;
+  margin-bottom: 20px;
+}
+
+.comparison-column {
+  padding: 10px;
+}
+
+.comparison-wordcloud-plot-container {
+  min-height: 390px; /* Give space for the plot */
+  background-color: #111111; /* Dark BG for wordclouds */
+  border: 1px solid #2D2640;
+  border-radius: 4px;
+  padding: 5px;
+}
+
+/* Ensure selectize inputs in the GOAT module also get themed */
+#goat_discourse_module-compare_player_A + div.selectize-control .selectize-input,
+#goat_discourse_module-compare_player_B + div.selectize-control .selectize-input {
+  background-color: #181522 !important;
+  color: #f0f0f0 !important;
+  border: 1px solid #3A3052 !important;
+}
+#goat_discourse_module-compare_player_A + div.selectize-control .selectize-input.focus,
+#goat_discourse_module-compare_player_B + div.selectize-control .selectize-input.focus {
+  border-color: #00AEEF !important;
+  box-shadow: 0 0 0 0.2rem rgba(0, 174, 239, 0.25) !important;
+}
+
+/* Tabset styling if needed */
+#goat_discourse_module-analyzer_mode_tabs .nav-pills .nav-link,
+#goat_discourse_module-individual_legend_tabs .nav-tabs .nav-link {
+  color: #b0b0b0;
+  background-color: #2D2640;
+  border-color: #3A3052;
+}
+#goat_discourse_module-analyzer_mode_tabs .nav-pills .nav-link.active,
+#goat_discourse_module-individual_legend_tabs .nav-tabs .nav-link.active {
+  color: #ffffff;
+  background-color: #00AEEF;
+  border-color: #00AEEF;
+}
+
+/* Status UI for Goat Module */
+#goat_discourse_module-module_status_ui .validation-error-message {
+    margin-top: 15px;
+}
+#goat_discourse_module-module_status_ui > p { /* For loading messages */
+    text-align: center;
+    color: #aaa;
+    font-size: 0.9em;
+    padding: 10px;
+    margin-top: 15px;
+}
+
+
+
+
+.about-container {
+  max-width: 900px; /* Or your preferred width */
+  margin: 20px auto;
+  padding: 20px;
+  background-color: #1A1527; /* Match card background */
+  border: 1px solid #2D2640;
+  border-radius: 8px;
+  color: #e0e0e0;
+}
+
+.about-section {
+  margin-bottom: 25px;
+}
+
+.about-header {
+  color: #00AEEF; /* Navbar cyan for main headers */
+  text-align: center;
+  margin-bottom: 15px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #3A3052; /* Purple-tinted border */
+  font-size: 1.7rem; /* Slightly smaller than main h3 */
+}
+
+.about-header-small { /* For less prominent headers like Disclaimer */
+  color: #cccccc;
+  text-align: center;
+  margin-bottom: 10px;
+  font-size: 1.3rem;
+  font-weight: 500;
+}
+
+.project-info p, 
+.data-sources p,
+.about-section div > p { /* Targeting paragraphs directly within a div in about-section */
+  font-size: 1.05em;
+  line-height: 1.7;
+  color: #c0c0c0; /* Lighter grey for readability */
+}
+
+.project-info p strong,
+.data-sources p strong {
+  color: #EAEAEA; /* Brighter text for labels */
+}
+
+.student-profiles .fluidRow {
+  justify-content: space-around; /* Helps center if only two profiles */
+}
+
+.profile-card {
+  text-align: center;
+  padding: 15px;
+  background-color: #241E33; /* Match card header BG for profile cards */
+  border-radius: 6px;
+  border: 1px solid #2D2640;
+  margin-bottom: 20px; /* Space between profile cards on smaller screens */
+  min-height: 320px; /* Ensure cards have some height */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.profile-pic {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%; /* Circular profile pictures */
+  object-fit: cover;   /* Ensures image covers the area, might crop */
+  border: 3px solid #00AEEF; /* Cyan border */
+  margin-bottom: 15px;
+  background-color: #3A3052; /* Fallback color if image fails */
+}
+
+.profile-name {
+  color: #ffffff !important; /* Override default h4 color if needed */
+  font-size: 1.25rem !important;
+  margin-top: 0px !important;
+  margin-bottom: 8px !important;
+  font-weight: 600;
+}
+
+.profile-bio {
+  font-size: 0.9em;
+  color: #b0b0b0;
+  line-height: 1.6;
+  text-align: left; /* Or center, if preferred */
+  padding: 0 10px; /* Some padding for bio text */
+}
+
+.about-hr {
+  border-top: 1px solid #4A406A !important; /* Darker purple-tinted hr for sections */
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.data-source-list {
+  list-style-type: none; /* Remove default bullets */
+  padding-left: 0;
+}
+
+.data-source-list li {
+  background-color: #241E33; /* Match profile card BG */
+  margin-bottom: 8px;
+  padding: 10px 15px;
+  border-radius: 4px;
+  border-left: 4px solid #00AEEF; /* Cyan accent */
+  color: #b0b0b0;
+}
+
+.data-source-list li a {
+  font-weight: 500;
+  color: #4Dc3F0; /* Lighter cyan for links */
+}
+.data-source-list li a:hover {
+  color: #ffffff;
+}
+
+#predictor_module-probability_bar_plot_pred { /* Target the specific plot output */
+  background-color: transparent !important;
+}
+
+#predictor_module-probability_bar_plot_pred text { /* General text in the plot */
+  fill: var(--bs-body-color) !important; /* Use theme's body text color */
+  font-family: "Fira Code", monospace, sans-serif !important;
+}
+
+#predictor_module-probability_bar_plot_pred .plot-title, /* If ggplot adds a title class */
+#predictor_module-probability_bar_plot_pred .axis-title { /* If ggplot adds axis title classes */
+  fill: var(--bs-heading-color) !important; /* Use theme's heading color */
+}
