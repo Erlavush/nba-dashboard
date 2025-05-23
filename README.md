@@ -29,7 +29,7 @@ The dashboard is organized into several key modules:
 3.  **Player Comparison**:
     *   Compare two NBA players side-by-side based on their season averages.
     *   Visualizations include radar charts for key stats, bar charts for selected metrics, and detailed statistical tables.
-    ![image](https://github.com/user-attachments/assets/fb6ad49a-990f-44bc-ad35-1ea82d2ba538)
+    ![image](https://github.com/user-attachments/assets/4db4fc18-7dee-494f-b2c9-677a3ca2592d)
 
 
 4.  **Goat Discourse**:
