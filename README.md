@@ -1,6 +1,6 @@
 ![image](https://github.com/user-attachments/assets/4db4fc18-7dee-494f-b2c9-677a3ca2592d)# NBA Dashboard - CS 226 Data Analytics Project
 
-![NBA Dashboard - Overview Tab Screenshot]![image](https://github.com/user-attachments/assets/6a25b153-e46b-49c8-9cba-3d1b3b03aaf0)
+![image](https://github.com/user-attachments/assets/6a25b153-e46b-49c8-9cba-3d1b3b03aaf0)
 
 
 ## Project Description
@@ -17,45 +17,43 @@ The dashboard is organized into several key modules:
     *   **League Standings**: View current Eastern and Western Conference standings.
     *   **League Leaders**: See top performers in Points, Rebounds, Assists, Steals, and Blocks.
     *   **Playoff Bracket**: Visualize the current (or a sample) NBA playoff picture.
-    ![NBA Dashboard - Overview Tab Highlights]![image](https://github.com/user-attachments/assets/1a2c25a2-0fb2-4c60-84ac-96b901f1d801)
-)
-)
-    *(Optional: Add another screenshot highlighting a specific part of the Overview, e.g., standings or scoreboard)*
+   ![image](https://github.com/user-attachments/assets/1a2c25a2-0fb2-4c60-84ac-96b901f1d801)
 
+   
 2.  **Player Deep Dive**:
     *   Select any NBA player to view their detailed biographical information (scraped from NBA.com).
     *   See detailed season average statistics, presented with dynamic team-specific theming.
-    ![NBA Dashboard - Player Deep Dive Screenshot]![image](https://github.com/user-attachments/assets/1af1e5fe-8b6f-48d3-95ca-5e4efc066a97)
-)
+    ![image](https://github.com/user-attachments/assets/1af1e5fe-8b6f-48d3-95ca-5e4efc066a97)
+
 
 3.  **Player Comparison**:
     *   Compare two NBA players side-by-side based on their season averages.
     *   Visualizations include radar charts for key stats, bar charts for selected metrics, and detailed statistical tables.
-    ![NBA Dashboard - Player Comparison Screenshot]![image](https://github.com/user-attachments/assets/fb6ad49a-990f-44bc-ad35-1ea82d2ba538)
-)
+    ![image](https://github.com/user-attachments/assets/fb6ad49a-990f-44bc-ad35-1ea82d2ba538)
+
 
 4.  **Goat Discourse**:
     *   Analyze public sentiment and key discussion themes from Twitter data related to NBA legends (Michael Jordan, LeBron James, Kobe Bryant, Kevin Durant).
     *   Features sentiment distribution donut charts, prominent term word clouds, and example positive/negative mentions.
     *   Compare the discourse around two selected legends.
-    ![NBA Dashboard - Goat Discourse Screenshot]![image](https://github.com/user-attachments/assets/642fb7ee-5856-4b18-a24d-271b06a9e2da
-)
+    ![image](https://github.com/user-attachments/assets/642fb7ee-5856-4b18-a24d-271b06a9e2da
+
 
 5.  **Historical NBA Trends**:
     *   Visualize league-average statistical trends over NBA history for both regular season and playoffs.
     *   Explore changes in 3-point shooting (volume and efficiency), 2-point shooting, and pace of play.
-    ![NBA Dashboard - Historical Trends Screenshot]![image](https://github.com/user-attachments/assets/3d4207c0-c6a2-4dd6-be89-db0066ee8fc4)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  
+    ![image](https://github.com/user-attachments/assets/3d4207c0-c6a2-4dd6-be89-db0066ee8fc4)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  
 6.  **NBA Predictor**:
     *   Predict the win probability for a hypothetical NBA game between two selected teams on a specified date.
     *   The prediction is based on a logistic regression model trained on historical game data.
     *   View key team statistics leading into the hypothetical matchup.
-    ![NBA Dashboard - Predictor Screenshot]![image](https://github.com/user-attachments/assets/2fcc437e-b869-44f5-9c7f-e5b7efcade48)
-)
+    ![image](https://github.com/user-attachments/assets/2fcc437e-b869-44f5-9c7f-e5b7efcade48)
+
 
 7.  **About**:
     *   Provides information about the project, its purpose, the developers, data sources, and an explanation of each dashboard tab's functionality.
-    ![NBA Dashboard - About Tab Screenshot]![image](https://github.com/user-attachments/assets/8f185d72-d909-4b91-9ab8-77337d5d4885)
-)
+   ![image](https://github.com/user-attachments/assets/8f185d72-d909-4b91-9ab8-77337d5d4885)
+
 
 ## Technologies Used
 
